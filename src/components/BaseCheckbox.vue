@@ -2,7 +2,7 @@
   <input
     type="checkbox"
     v-bind:checked="checked"
-    v-on:change="$emit('change', $event.target.checked)"
+    v-on:change="$emit('yourmom', $event.target.checked)"
   />
 </template>
 
@@ -11,7 +11,7 @@ export default {
   name: "base-checkbox",
   model: {
     prop: "checked",
-    event: "change"
+    event: "yourmom"
   },
   props: {
     checked: Boolean

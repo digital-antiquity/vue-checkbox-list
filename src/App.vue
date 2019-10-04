@@ -48,9 +48,19 @@ export default {
     };
   },
   methods: {
+    doupdate: function() {
+      console.log("doupdate")
+    },
+
+
     sendOuterUpdate: function() {
       this.selectedItems = ["1", "3"];
       this.$set(this.selectedItems, 0, "1")
+    }
+  },
+  watch: {
+    listupdate: function() {
+      console.log("listupdate event");
     }
   }
 };
