@@ -59,7 +59,19 @@ export default {
     selectedItems: function() {
       console.log("selected items changed");
       this.$emit("input", this.selectedItems);
+    },
+
+    value: function(v) {
+      var self = this;
+      console.log("component value changed:%s ", v);
+      this.selectedItems.splice(this.selectedItems.length);
+      v.forEach(function(val){
+
+          self.selectedItems.push(val);
+      });
     }
-  }
+  },
+
+
 };
 </script>

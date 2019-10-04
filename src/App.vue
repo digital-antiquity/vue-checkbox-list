@@ -3,27 +3,38 @@
     <HelloWorld msg="Hello Vue in CodeSandbox!"/>
     <h1>form</h1>
     <form>
+      <h2>Checkbox List</h2>
       <fieldset>
         <CheckboxList :choices="myoptions" v-model="selectedItems" />
       </fieldset>
+
+      <fieldset>
+        <h2>Single Checkbox</h2>
+        <BaseCheckbox v-model="lovingVue"></BaseCheckbox>
+      </fieldset>
     </form>
-    Outer Selected Items: {{selectedItems}}
+    Selected Items:{{selectedItems}} 
+    Single item: {{lovingVue}}
     <br/>
     <button type="button" @click="sendOuterUpdate">send outer update</button>
+
   </div>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld";
 import CheckboxList from "./components/CheckboxList";
+import BaseCheckbox from "./components/BaseCheckbox";
 export default {
   name: "App",
   components: {
     HelloWorld,
-    CheckboxList
+    CheckboxList,
+    BaseCheckbox
   },
   data: function() {
     return {
+      lovingVue: false,
       selectedItems: [],
       myoptions: [
           { value: "1", label: "one" },
