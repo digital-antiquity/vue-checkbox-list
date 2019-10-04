@@ -13,10 +13,10 @@
         <BaseCheckbox v-model="lovingVue"></BaseCheckbox>
       </fieldset>
     </form>
+    <code>
     Selected Items:{{selectedItems}} 
-    Single item: {{lovingVue}}
+    </code>
     <br/>
-    <button type="button" @click="sendOuterUpdate">send outer update</button>
 
   </div>
 </template>
@@ -74,5 +74,21 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+
+
+div.checkboxlist {
+  text-align: left;
+}
+code {
+  display: inline-block;
+  font-size: 14pt;
+  border: 1px solid #ccc;
+  color: #ddd;
+  margin: 1em;
+  padding: 1em;
+
+
 }
 </style>

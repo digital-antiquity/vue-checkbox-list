@@ -1,29 +1,16 @@
-<style>
-div.checkboxlist {
-  text-align: left;
-}
-code {
-  color: #ddd;
-  margin-left: 1em;
-}
-</style>
 <template>
   <div class="checkboxlist">
     <div v-for="item in choices" :key="item.value">
       <label>
-        <input 
-          type="checkbox" 
+        <input
+          type="checkbox"
           :name="name"
           v-bind:checked="isChecked(item.value)"
           v-on:change="cbchanged(item.value, $event.target.checked)"
-          />
+        />
         {{item.label}}
       </label>
-      <code>value:{{item.value}} label:{{item.label}} {{item}}</code>
     </div>
-    inner selected items: {{items}}
-    <br />
-    <button type="button" @click="sendUpdate">update</button>
   </div>
 </template>
  
@@ -55,13 +42,12 @@ export default {
   methods: {
     cbchanged: function(val, itemChecked) {
       //compare previsu
-      if(itemChecked) {
-        if(this.items.indexOf(val) === -1) {
+      if (itemChecked) {
+        if (this.items.indexOf(val) === -1) {
           this.items.push(val);
-        } 
+        }
       } else {
         _removeByValue(this.items, val);
-
       }
       console.log("cbchanged");
       // this.$emit('listupdate', this.items);
@@ -70,27 +56,23 @@ export default {
 
     isChecked: function(val) {
       return this.items.indexOf(val) >= 0;
-    },
-    sendUpdate: function() {
-      console.log("component: sending update");
-      this.$emit("input", this.selectedItems);
     }
   }
 };
 
 /**
- * Mutates an array by removing an element with a value equal to 
+ * Mutates an array by removing an element with a value equal to
  * the specified item, if such element exists. This method removes
  * at most one array element per call (rather than removing all
  * elements with a matching value).
- * 
+ *
  * Returns true, if the method removed an element, otherwise false.
  */
 function _removeByValue(arr, item) {
   var idx = arr.indexOf(item);
-  if(idx >= 0) {
+  if (idx >= 0) {
     arr.splice(idx, 1);
   }
-  return idx >=0;
+  return idx >= 0;
 }
 </script>
