@@ -18,10 +18,14 @@
 <script>
 export default {
   name: "CheckboxList",
+  
+  // FIXME: Is it really necessary to customize the component v-model directive here?
+  // FIXME: Even if it is,  'items' and 'listupdate' are lame names.
   model: {
     prop: "items",
     event: "listupdate"
   },
+
   props: {
     msg: String,
     name: String,
@@ -33,6 +37,7 @@ export default {
       type: Array
     }
   },
+
   data: function() {
     return {
       selectedItems: []
@@ -50,10 +55,7 @@ export default {
         _removeByValue(this.items, val);
       }
       console.log("cbchanged");
-      // this.$emit('listupdate', this.items);
-      // this.$emit('input', this.items);
     },
-
     isChecked: function(val) {
       return this.items.indexOf(val) >= 0;
     }

@@ -1,37 +1,31 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Hello Vue in CodeSandbox!"/>
-    <h1>form</h1>
+    <HelloWorld msg="CheckboxList Demo"/>
     <form>
-      <h2>Checkbox List</h2>
       <fieldset>
+        <legend>Checkbox List</legend>
         <CheckboxList :choices="myoptions" v-model="selectedItems" />
       </fieldset>
 
       <fieldset>
-        <h2>Single Checkbox</h2>
-        <BaseCheckbox v-model="lovingVue"></BaseCheckbox>
+        <legend>Selected Values</legend>
+        <code v-for="item in selectedItems" v-bind:key="item">{{item}}</code>
       </fieldset>
     </form>
-    <code>
-    Selected Items:{{selectedItems}} 
-    </code>
-    <br/>
+    
 
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
 import CheckboxList from "./components/CheckboxList";
-import BaseCheckbox from "./components/BaseCheckbox";
+import HelloWorld from  "./components/HelloWorld"
+
+
+
 export default {
   name: "App",
-  components: {
-    HelloWorld,
-    CheckboxList,
-    BaseCheckbox
-  },
+  components: {HelloWorld, CheckboxList},
   data: function() {
     return {
       lovingVue: false,
@@ -43,7 +37,6 @@ export default {
           { value: "4", label: "four" },
           { value: "5", label: "five" },
           { value: "6", label: "six" }
-
       ]
     };
   },
@@ -74,21 +67,25 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  margin: 10pt;
 }
-
-
 
 div.checkboxlist {
   text-align: left;
 }
+
+fieldset {
+  margin: 10pt 0;
+}
 code {
-  display: inline-block;
+  /* display: block; */
   font-size: 14pt;
-  border: 1px solid #ccc;
-  color: #ddd;
+  color: #bbb;
+  text-align: justify;
   margin: 1em;
-  padding: 1em;
+}
 
-
+label {
+  font-size: 14pt;
 }
 </style>
