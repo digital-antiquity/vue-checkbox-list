@@ -39,9 +39,7 @@ export default {
   },
 
   data: function() {
-    return {
-      selectedItems: []
-    };
+    return {};
   },
 
   methods: {
