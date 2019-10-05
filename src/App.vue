@@ -39,7 +39,14 @@
           Select List
           <span v-if="!bShowSelectList">(hidden)</span>
         </legend>
-        <SelectList v-if="bShowSelectList" name="myselectlist" :options="myoptions" :size="10" />
+        <SelectList v-if="bShowSelectList" 
+            name="myselectlist" 
+            :size="10" 
+            :options="myoptions" 
+            labelKey="label"
+            valueKey="value"
+            v-model="selectedItems"
+        />
       </fieldset>
 
       <fieldset>

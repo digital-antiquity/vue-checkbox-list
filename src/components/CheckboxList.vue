@@ -54,9 +54,22 @@ export default {
       }
       console.log("cbchanged");
     },
+
     isChecked: function(val) {
       return this.items.indexOf(val) >= 0;
-    }
+    },
+
+
+    labelFor: function(opt) {
+      return opt[this.labelKey];
+    },
+
+    valueFor: function(opt) {
+      return opt[this.valueKey];
+    },
+
+
+
   }
 };
 

@@ -1,18 +1,32 @@
 <template>
   <div class="selectlist">
-    <select :name="name" :multiple="size > 1" :size="size" class>
+    <select 
+        :name="name" 
+        :multiple="size > 1" 
+        :size="size"
+        @input="selectedOptionsChanged($event.target)"
+
+      >
       <option
-        v-for="(option, index) in options"
+        v-for="(opt, index) in options"
         :key="name + 'option_' + index"
-        :value="option.value"
-      >{{option.label}}</option>
+        :value="opt.value"
+        :selected="isSelected(valueFor(opt))"
+      >{{opt.label}}</option>
     </select>
   </div>
 </template>
 
 <script>
 export default {
+
   name: "SelectList",
+
+  model: {
+    prop: "selectedOptions",
+    event: "listupdate"
+  },
+
   props: {
     name: {
       type: String,
@@ -34,11 +48,13 @@ export default {
       required: false,
       default: "label"
     },
+
     valueKey: {
       type: String,
       required: false,
       default: "value"
     },
+
     size: {
       type: Number,
       required: false,
@@ -48,8 +64,45 @@ export default {
 
   mounted: function() {},
   computed: {},
-  methods: {}
+  methods: {
+    labelFor: function(opt) {
+      return opt[this.labelKey];
+    },
+
+    valueFor: function(opt) {
+      return opt[this.valueKey];
+    },
+
+    isSelected: function(val) {
+      var selo = this.selectedOptions;
+      var idx = selo.indexOf(val);
+      return idx > -1;
+    },
+
+    selectedOptionsChanged: function(sel) {
+      console.log("options changed");
+      
+     this.selectedOptions.splice(0, this.selectedOptions.length);
+      for(var i = 0; i < sel.options.length; i++) {
+        if(sel.options[i].selected) {
+          this.selectedOptions.push(this.valueFor(this.options[i]));
+        }
+      }
+
+
+    }
+  }
 };
+
+
+function _removeByValue(arr, item) {
+  var idx = arr.indexOf(item);
+  if (idx >= 0) {
+    arr.splice(idx, 1);
+  }
+  return idx >= 0;
+}
+
 </script>
 
 
