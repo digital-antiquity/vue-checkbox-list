@@ -24,16 +24,17 @@
           <label>
             <input type="checkbox" v-model="bShowCheckboxList" />CheckboxList
           </label>
+          <label><input type="checkbox" v-model="bShowJson">JSON</label>
         </div>
 
         <div class="form-control">
-          <label>Actions</label>
+          <label>Actions (coming soon)</label>
           <br />
-          <button type="button" class="btn" @click="selectAll">Select All</button>
-          <button type="button" class="btn" @click="selectRandom">Select Random</button>
-          <button type="button" class="btn" @click="selectNone">Select None</button> •
-          <button type="button" class="btn" @click="serialize">Serialize</button>
-          <button type="button" class="btn" @click="deserialize">Deserialize</button>
+          <button disabled type="button" class="btn" @click="selectAll">Select All</button>
+          <button disabled type="button" class="btn" @click="selectRandom">Select Random</button>
+          <button disabled type="button" class="btn" @click="selectNone">Select None</button> &nbsp;&nbsp;
+          <button disabled type="button" class="btn" @click="serialize">Serialize</button>
+          <button disabled type="button" class="btn" @click="deserialize">Deserialize</button>
         </div>
       </fieldset>
 
@@ -43,14 +44,16 @@
           Select List
           <span v-if="!bShowSelectList">(hidden)</span>
         </legend>
-        <SelectList v-if="bShowSelectList" 
-            name="myselectlist" 
-            :size="10" 
-            :options="optionsMap[datasource]" 
-            labelKey="label"
-            valueKey="value"
-            v-model="selectedItems"
-        />
+        <div class="scrollbox" v-if="bShowSelectList" >
+            <SelectList  
+                name="myselectlist" 
+                :size="10" 
+                :options="optionsMap[datasource]" 
+                labelKey="label"
+                valueKey="value"
+                v-model="selectedItems"
+            />
+        </div>
       </fieldset>
 
       <fieldset>
@@ -58,15 +61,26 @@
           Checkbox List
           <span v-if="!bShowCheckboxList">(hidden)</span>
         </legend>
-        <CheckboxList v-if="bShowCheckboxList" :choices="optionsMap[datasource]" v-model="selectedItems" />
+        <div class="scrollbox" v-if="bShowCheckboxList">
+            <CheckboxList  :choices="optionsMap[datasource]" v-model="selectedItems" />
+        </div>
       </fieldset>
 
-      <fieldset>
+      <fieldset v-if="false">
         <legend>Selected Values</legend>
         <div class="selected">
           <code v-for="item in selectedItems" v-bind:key="item">{{item}}</code>
         </div>
       </fieldset>
+
+      <fieldset>
+          <legend>JSON Output</legend>
+          <div class="scrollbox">
+              {{jsonoutput}}
+          </div>
+      </fieldset>
+
+
     </form>
   </div>
 </template>
@@ -127,8 +141,9 @@ export default {
       myoptions: generateOptions(columnMap["figurative_specific"]),
 
       /// Demo Options
-      bShowCheckboxList: false,
+      bShowCheckboxList: true,
       bShowSelectList: true,
+      bShowJson: false,
       selectedDatasourceList: []
     };
   },
@@ -173,6 +188,14 @@ export default {
         ret = this.selectedDatasourceList[0]
       }
       return ret;
+    },
+
+    jsonoutput: function() {
+        var ret = ""
+        if(this.selectedItems){
+            ret =  JSON.stringify(this.selectedItems, null, 4);
+        }
+        return ret;
     }
   },
 
@@ -193,8 +216,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
-  margin: 10pt;
+  margin: 8pt;
 }
 
 div.checkboxlist {
@@ -202,10 +224,11 @@ div.checkboxlist {
 }
 
 fieldset {
-  margin: 10pt 0;
+  margin: 5pt 0 25pt 0;
   text-align: left;
   border-radius: 6pt;
   border: 2pt solid #ccc;
+  /* background-color: #fdfdfe; */
 }
 code {
   display: inline-block;
@@ -221,10 +244,18 @@ code {
 
 label {
   font-size: 14pt;
+  margin-right: 5pt;
 }
 
 select[multiple] {
   border-radius: 5pt;
 }
+
+div.scrollbox {
+    height: 210pt;
+    max-height: 225pt;
+    overflow-y: scroll;
+}
+
 </style>
 
