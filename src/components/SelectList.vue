@@ -10,9 +10,9 @@
       <option
         v-for="(opt, index) in options"
         :key="name + 'option_' + index"
-        :value="opt.value"
+        :value="valueFor(opt)"
         :selected="isSelected(valueFor(opt))"
-      >{{opt.label}}</option>
+      >{{labelFor(opt)}}</option>
     </select>
   </div>
 </template>
@@ -95,13 +95,13 @@ export default {
 };
 
 
-function _removeByValue(arr, item) {
-  var idx = arr.indexOf(item);
-  if (idx >= 0) {
-    arr.splice(idx, 1);
-  }
-  return idx >= 0;
-}
+// function _removeByValue(arr, item) {
+//   var idx = arr.indexOf(item);
+//   if (idx >= 0) {
+//     arr.splice(idx, 1);
+//   }
+//   return idx >= 0;
+// }
 
 </script>
 

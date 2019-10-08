@@ -6,11 +6,14 @@
         <legend>Demo Options</legend>
         <div class="form-control">
           <label for="selDatasource">Data Source</label>
-          <select id="selDatasource" disabled>
-            <option>Not Yet Available</option>
-            <option>Not Yet Available</option>
-            <option>Not Yet Available</option>
-          </select>
+          <SelectList 
+            name="dataSource"
+            :size="1"
+            :options="columns"
+            labelKey="name"
+            valueKey="name"
+            v-model="selectedDatasourceList"
+          />
         </div>
 
         <div class="form-control">
@@ -34,6 +37,7 @@
         </div>
       </fieldset>
 
+
       <fieldset>
         <legend>
           Select List
@@ -42,7 +46,7 @@
         <SelectList v-if="bShowSelectList" 
             name="myselectlist" 
             :size="10" 
-            :options="myoptions" 
+            :options="optionsMap[datasource]" 
             labelKey="label"
             valueKey="value"
             v-model="selectedItems"
@@ -54,7 +58,7 @@
           Checkbox List
           <span v-if="!bShowCheckboxList">(hidden)</span>
         </legend>
-        <CheckboxList v-if="bShowCheckboxList" :choices="myoptions" v-model="selectedItems" />
+        <CheckboxList v-if="bShowCheckboxList" :choices="optionsMap[datasource]" v-model="selectedItems" />
       </fieldset>
 
       <fieldset>
@@ -75,40 +79,57 @@ import Mimdata from "./assets/mimdata.js";
 
 var _random = Math.random.bind(Math);
 
-function getdata() {
-  var mimdata = Mimdata;
-  var datasetReferences = mimdata.datasetReferences[0].columns;
-  var subdata = datasetReferences;
-  var clone = deepclone(subdata);
-  return clone;
-}
-
 function deepclone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 
-function generateOptions(columnName) {
-  var columns = getdata().reduce((obj, column) => {
-    obj[column.name] = column;
-    return obj;
-  }, {});
-  var columnValues = columns[columnName].values;
+// return a map of dataset columns keyed by column name
+// todo: make this keyed by columnId maybe
+function getdata() {
+  var datasetColumns = Mimdata.datasetReferences[0].columns;
+  var columns = deepclone(datasetColumns);
+  return columns
+}
+
+function generateOptions(column) {
+  var columnValues = column.values;
   var opts = columnValues.map(v => ({ label: v, value: v }));
   return opts;
 }
+
 
 export default {
   name: "App",
   components: { HelloWorld, CheckboxList, SelectList },
   data: function() {
+    var columns = getdata();
+    var columnMap = columns.reduce((obj, column) => {
+      obj[column.name] = column;
+      return obj; 
+    }, {});
+
+
+    var columnOptionsMap = columns.reduce((obj, column)=> {
+      var opts = column.values.map(v => ({ label: v, value: v }));
+      obj[column.name] = opts;
+      return obj;
+    },{})
+    
+
     return {
       lovingVue: false,
+
+      columns: columns,
+      columnMap: columnMap,
+      optionsMap: columnOptionsMap,
+
       selectedItems: [],
-      myoptions: generateOptions("figurative_specific"),
+      myoptions: generateOptions(columnMap["figurative_specific"]),
 
       /// Demo Options
       bShowCheckboxList: false,
-      bShowSelectList: true
+      bShowSelectList: true,
+      selectedDatasourceList: []
     };
   },
 
@@ -132,7 +153,7 @@ export default {
     },
 
     selectRandom: function() {
-      
+      return _random();
     },
 
     selectNone: function() {
@@ -143,9 +164,20 @@ export default {
 
     deserialize: function() {
     },
-
-
   },
+
+  computed: {
+    datasource: function(){
+      var ret = "";
+      if(this.selectedDatasourceList.length > 0) {
+        ret = this.selectedDatasourceList[0]
+      }
+      return ret;
+    }
+  },
+
+
+  
   watch: {
     listupdate: function() {
       console.log("listupdate event");
@@ -195,3 +227,4 @@ select[multiple] {
   border-radius: 5pt;
 }
 </style>
+
