@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HelloWorld msg="VueDAR Component Demo" />
+    <HelloWorld msg="VueDAR™ Component Demo" />
     <form>
       <fieldset class="demo-options">
         <legend>Demo Options</legend>
@@ -49,6 +49,7 @@
                 name="myselectlist" 
                 :size="10" 
                 :options="optionsMap[datasource]" 
+                v-if="optionsMap[datasource]" 
                 labelKey="label"
                 valueKey="value"
                 v-model="selectedItems"
@@ -62,7 +63,12 @@
           <span v-if="!bShowCheckboxList">(hidden)</span>
         </legend>
         <div class="scrollbox" v-if="bShowCheckboxList">
-            <CheckboxList  :choices="optionsMap[datasource]" v-model="selectedItems" />
+            <CheckboxList  
+                :choices="optionsMap[datasource]" 
+                v-if="optionsMap[datasource]" 
+                v-model="selectedItems" 
+                labelKey="label"
+                valueKey="value" />
         </div>
       </fieldset>
 
@@ -73,7 +79,7 @@
         </div>
       </fieldset>
 
-      <fieldset>
+      <fieldset v-show="bShowJson">
           <legend>JSON Output</legend>
           <div class="scrollbox">
               {{jsonoutput}}

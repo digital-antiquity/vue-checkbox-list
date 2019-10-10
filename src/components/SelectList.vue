@@ -32,10 +32,12 @@ export default {
       type: String,
       required: true
     },
+    
     options: {
       type: [Object, Array],
-      required: true
+      required: false
     },
+    
     selectedOptions: {
       required: false,
       type: Array,
@@ -43,6 +45,7 @@ export default {
         return [];
       }
     },
+    
     labelKey: {
       type: String,
       required: false,
@@ -52,7 +55,7 @@ export default {
     valueKey: {
       type: String,
       required: false,
-      default: "value"
+      default: ""
     },
 
     size: {
@@ -65,12 +68,30 @@ export default {
   mounted: function() {},
   computed: {},
   methods: {
-    labelFor: function(opt) {
-      return opt[this.labelKey];
+
+
+    /**
+     * Return the object property in the location specified by the labelKey
+     * prop. If no labelKey defined, return the object itself. 
+     */
+    labelFor: function(obj) {
+      var label = obj;
+      if(this.valueKey) {
+        label = obj[this.labelKey];
+      }
+      return label;
     },
 
-    valueFor: function(opt) {
-      return opt[this.valueKey];
+    /**
+     * Return the object property in the location specified by the valueKey
+     * prop. If no valueKey defined, return the object itself. 
+     */
+    valueFor: function(obj) {
+      var val = obj;
+      if(this.valueKey) {
+        val = obj[this.valueKey];
+      }
+      return val;
     },
 
     isSelected: function(val) {
@@ -93,15 +114,6 @@ export default {
     }
   }
 };
-
-
-// function _removeByValue(arr, item) {
-//   var idx = arr.indexOf(item);
-//   if (idx >= 0) {
-//     arr.splice(idx, 1);
-//   }
-//   return idx >= 0;
-// }
 
 </script>
 

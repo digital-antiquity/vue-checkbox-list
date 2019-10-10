@@ -5,7 +5,7 @@
         <input
           type="checkbox"
           :name="name"
-          v-bind:checked="isChecked(item.value)"
+          v-bind:checked="isChecked(valueFor(item))"
           v-on:change="cbchanged(item.value, $event.target.checked)"
         />
         {{item.label}}
@@ -30,12 +30,30 @@ export default {
     msg: String,
     name: String,
     disabled: Boolean,
+    
     choices: {
       required: true
     },
+    
     items: {
       type: Array
-    }
+    },
+
+    labelKey: {
+      type: String,
+      required: false,
+      default: function() {return ""}
+    },
+
+    valueKey: {
+      type: String,
+      required: false,
+      default: function() {return ""}
+    },
+    
+
+
+
   },
 
   data: function() {
@@ -44,7 +62,8 @@ export default {
 
   methods: {
     cbchanged: function(val, itemChecked) {
-      //compare previsu
+      
+      // FIXME: direct property manipulation is verboten, even if it appears to work here 
       if (itemChecked) {
         if (this.items.indexOf(val) === -1) {
           this.items.push(val);
