@@ -4,72 +4,101 @@
     <form class="form">
       <fieldset class=" demo-options">
         <legend>Demo Options</legend>
-        <div class="">
-          <label for="selDatasource">Data Source</label>
-          <SelectList 
-            name="dataSource"
-            :size="1"
-            :options="columns"
-            labelKey="name"
-            valueKey="name"
-            v-model="selectedDatasourceList"
-          />
+        <div class="form-row">
+            <div class="col-3 form-group" >
+                <label class="col-form-label" for="selDatasource">Data Source</label>
+                <SelectList 
+                    name="dataSource"
+                    :size="1"
+                    :options="columns"
+                    labelKey="name"
+                    valueKey="name"
+                    v-model="selectedDatasourceList"
+                />
+            </div>
+
+            <div class="col-9 form-group" >
+                <label class="col-form-label">Viewable Controls</label>
+                <div class="form-check">
+                    <label class="form-check-label">
+                    <input type="checkbox" v-model="bShowSelectList" class="form-check-input" >
+                        SelectList
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                    <input type="checkbox" v-model="bShowCheckboxList" class="form-check-input" >
+                        CheckboxList
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label" >
+                    <input type="checkbox" v-model="bShowJson" class="form-check-input" id="cbShowJson" >
+                        JSON
+                    </label>
+                </div>
+            </div>
         </div>
 
-        <div class="">
-          <label>Viewable Controls</label>
-          <label>
-            <input type="checkbox" v-model="bShowSelectList" />SelectList
-          </label>
-          <label>
-            <input type="checkbox" v-model="bShowCheckboxList" />CheckboxList
-          </label>
-          <label><input type="checkbox" v-model="bShowJson">JSON</label>
-        </div>
 
-        <div class="">
-          <label>Actions (coming soon)</label>
-          <br />
-          <button disabled type="button" class="btn" @click="selectAll">Select All</button>
-          <button disabled type="button" class="btn" @click="selectRandom">Select Random</button>
-          <button disabled type="button" class="btn" @click="selectNone">Select None</button> &nbsp;&nbsp;
-          <button disabled type="button" class="btn" @click="serialize">Serialize</button>
-          <button disabled type="button" class="btn" @click="deserialize">Deserialize</button>
+        <div class="form-row">
+            <div class="col-6 form-group">
+                <label class="col-form-label">Actions (coming soon)</label>
+                <div class="form-inline">
+                    <button disabled type="button" class="btn btn-secondary btn-sm" @click="selectAll">Select All</button>
+                    <button disabled type="button" class="btn btn-secondary btn-sm" @click="selectRandom">Select Random</button>
+                    <button disabled type="button" class="btn btn-secondary btn-sm" @click="selectNone">Select None</button>
+                    <button disabled type="button" class="btn btn-secondary btn-sm" @click="serialize">Serialize</button>
+                    <button disabled type="button" class="btn btn-secondary btn-sm" @click="deserialize">Deserialize</button>
+                </div>
+            </div>
         </div>
       </fieldset>
 
 
       <fieldset>
-        <legend>
-          Select List
-          <span v-if="!bShowSelectList">(hidden)</span>
-        </legend>
-        <div class="scrollbox" v-if="bShowSelectList" >
-            <SelectList  
-                name="myselectlist" 
-                :size="10" 
-                :options="optionsMap[datasource]" 
-                v-if="optionsMap[datasource]" 
-                labelKey="label"
-                valueKey="value"
-                v-model="selectedItems"
-            />
-        </div>
+          <div class="form-row">
+              <div class="col-12">
+                <legend>
+                Select List
+                <span v-if="!bShowSelectList">(hidden)</span>
+                </legend>
+                <div class="scrollbox" v-if="bShowSelectList" >
+                    <SelectList  
+                        name="myselectlist" 
+                        :size="10" 
+                        :options="optionsMap[datasource]" 
+                        v-if="optionsMap[datasource]" 
+                        labelKey="label"
+                        valueKey="value"
+                        v-model="selectedItems"
+                    />
+                </div>
+              </div>
+          </div>
       </fieldset>
 
-      <fieldset>
-        <legend>
-          Checkbox List
-          <span v-if="!bShowCheckboxList">(hidden)</span>
-        </legend>
-        <div class="scrollbox" v-if="bShowCheckboxList">
-            <CheckboxList  
-                :choices="optionsMap[datasource]" 
-                v-if="optionsMap[datasource]" 
-                v-model="selectedItems" 
-                labelKey="label"
-                valueKey="value" />
-        </div>
+      <fieldset class="form-row">
+          <div class="col-12">
+            <legend>
+            Checkbox List
+            <span v-if="!bShowCheckboxList">(hidden)</span>
+            </legend>
+            <div class="col-12">
+                <div class="scrollbox form-row " v-if="bShowCheckboxList">
+                    <CheckboxList  
+                        :choices="optionsMap[datasource]" 
+                        v-if="optionsMap[datasource]" 
+                        v-model="selectedItems" 
+                        labelKey="label"
+                        valueKey="value" 
+                        class=""
+                        />
+                </div>
+            </div>
+
+          </div>
+          
       </fieldset>
 
       <fieldset v-if="false">

@@ -1,8 +1,9 @@
 <template>
-  <div class="checkboxlist">
-    <div v-for="item in choices" :key="item.value">
-      <label>
+  <div class="checkboxlist d-flex flex-column flex-wrap" style="height:300px">
+    <div class="form-check" v-for="item in choices" :key="item.value">
+      <label class="form-check-label">
         <input
+          class="form-check-input"
           type="checkbox"
           :name="name"
           v-bind:checked="isChecked(valueFor(item))"
