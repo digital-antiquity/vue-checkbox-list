@@ -1,6 +1,7 @@
 <template>
-  <div class="selectlist">
-    <select 
+  <div class="selectlist form-group">
+    <select
+        class="form-control" 
         :name="name" 
         :multiple="size > 1" 
         :size="size"

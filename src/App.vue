@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" class="container-fluid">
     <HelloWorld msg="VueDAR™ Component Demo" />
-    <form>
-      <fieldset class="demo-options">
+    <form class="form">
+      <fieldset class=" demo-options">
         <legend>Demo Options</legend>
-        <div class="form-control">
+        <div class="">
           <label for="selDatasource">Data Source</label>
           <SelectList 
             name="dataSource"
@@ -16,7 +16,7 @@
           />
         </div>
 
-        <div class="form-control">
+        <div class="">
           <label>Viewable Controls</label>
           <label>
             <input type="checkbox" v-model="bShowSelectList" />SelectList
@@ -27,7 +27,7 @@
           <label><input type="checkbox" v-model="bShowJson">JSON</label>
         </div>
 
-        <div class="form-control">
+        <div class="">
           <label>Actions (coming soon)</label>
           <br />
           <button disabled type="button" class="btn" @click="selectAll">Select All</button>
