@@ -51,10 +51,6 @@ export default {
       required: false,
       default: function() {return ""}
     },
-    
-
-
-
   },
 
   data: function() {
@@ -65,14 +61,16 @@ export default {
     cbchanged: function(val, itemChecked) {
       
       // FIXME: direct property manipulation is verboten, even if it appears to work here 
+      var newItems = this.items.slice();
       if (itemChecked) {
-        if (this.items.indexOf(val) === -1) {
-          this.items.push(val);
+        if (newItems.indexOf(val) === -1) {
+          newItems.push(val);
         }
       } else {
-        _removeByValue(this.items, val);
+        _removeByValue(newItems, val);
       }
-      console.log("cbchanged");
+      //inform parent about new value
+      this.$emit("listupdate", newItems);
     },
 
     isChecked: function(val) {

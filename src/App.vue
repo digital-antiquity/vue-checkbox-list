@@ -14,6 +14,7 @@
                     labelKey="name"
                     valueKey="name"
                     v-model="selectedDatasourceList"
+                    :statusBar="false"
                 />
             </div>
 
@@ -72,6 +73,7 @@
                         labelKey="label"
                         valueKey="value"
                         v-model="selectedItems"
+                        :statusBar="true"
                     />
                 </div>
               </div>
@@ -93,6 +95,7 @@
                         labelKey="label"
                         valueKey="value" 
                         class=""
+
                         />
                 </div>
             </div>
@@ -287,8 +290,8 @@ select[multiple] {
 }
 
 div.scrollbox {
-    height: 210pt;
-    max-height: 225pt;
+    height: 250pt;
+    max-height: 500pt;
     overflow-y: scroll;
 }
 
